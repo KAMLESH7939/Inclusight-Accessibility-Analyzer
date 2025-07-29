@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html {
+scroll-behavior: smooth;
+}
+.no-scrollbar::-webkit-scrollbar {
+display: none;
+}
+.no-scrollbar {
+-ms-overflow-style: none;
+scrollbar-width: none;
+}
+
+
+.grade1 {
+    background: red;
+    background: -webkit-linear-gradient(left,red, rgb(255, 128, 0), rgb(255, 230, 0), green, cyan, blue, violet);
+    background: -o-linear-gradient(right,red, rgb(255, 128, 0), rgb(255, 230, 0), green, cyan, blue, violet);
+    background: -moz-linear-gradient(right,red, rgb(255, 128, 0), rgb(255, 230, 0), rgb(0, 128, 0), cyan, blue, violet);
+    background: linear-gradient(to left,red, rgb(255, 128, 0), rgb(255, 230, 0), green, cyan, blue, violet);
+    background-clip: text; /* Add this line */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+.rainbow-box {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 1) 0%,
+        rgba(255, 154, 0, 1) 10%,
+        rgba(208, 222, 33, 1) 20%,
+        rgba(79, 220, 74, 1) 30%,
+        rgba(63, 218, 216, 1) 40%,
+        rgba(47, 201, 226, 1) 50%,
+        rgba(28, 127, 238, 1) 60%,
+        rgba(95, 21, 242, 1) 70%,
+        rgba(186, 12, 248, 1) 80%,
+        rgba(251, 7, 217, 1) 90%,
+        rgba(255, 0, 0, 1) 100%
+    );
+     opacity: 0.5;
+
+}
+
+.bgimage {
+  /* The image used */
+  background: linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 1) 0%,
+        rgba(255, 154, 0, 1) 10%,
+        rgba(208, 222, 33, 1) 20%,
+        rgba(79, 220, 74, 1) 30%,
+        rgba(63, 218, 216, 1) 40%,
+        rgba(47, 201, 226, 1) 50%,
+        rgba(28, 127, 238, 1) 60%,
+        rgba(95, 21, 242, 1) 70%,
+        rgba(186, 12, 248, 1) 80%,
+        rgba(251, 7, 217, 1) 90%,
+        rgba(255, 0, 0, 1) 100%
+    );
+  
+  /* Add the blur effect */
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  
+  /* Full height */
+  height: 100%; 
+  
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+.bgtext {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  border: 3px solid #f1f1f1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+}
+
+
+
+button {
+  border: none;
+}
+
+.c-button {
+  background: linear-gradient(140deg, rgba(75, 118, 200, 1) 0%, rgba(31, 70, 145, 1) 100%);
+  border-radius: 45px;
+  font-size: 21px;
+  text-align: left;
+  padding: 5px 0px 5px 0px;
+  border: 1px solid rgb(37, 37, 37) !important;
+  border-style: outset;
+  box-shadow: -6px -5px 18px rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+.c-button .c-main {
+  border-radius: 45px;
+  color: rgba(255, 255, 255, 1);
+  padding: 5px 20px 5px 2px;
+  box-shadow: inset 0px 0px 5px rgba(17, 17, 17, 0);
+  transition: all 0.5s ease-in-out;
+  border: 1px solid transparent;
+}
+
+.c-ico .c-blur {
+  background: linear-gradient(318deg, rgba(75, 118, 200, 1) 0%, rgba(31, 70, 145, 1) 100%);
+  border-radius: 100%;
+  margin-left: 0;
+  padding: 5px 20px;
+  filter: blur(1px);
+  text-align: center;
+}
+
+.c-ico {
+  position: relative;
+  margin-right: 10px;
+}
+
+.c-ico .ico-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Hovering */
+
+.c-button .c-main:hover {
+  box-shadow: inset 0px 0px 5px rgba(17, 17, 17, 0.6);
+  border: 1px solid rgba(26, 26, 26,0.5);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+
+
+
+
+.c1-button {
+  background: linear-gradient(140deg, rgb(200, 75, 75) 0%, rgb(145, 31, 31) 100%);
+  border-radius: 45px;
+  font-size: 21px;
+  text-align: left;
+  padding: 5px 0px 5px 0px;
+  border: 1px solid rgb(37, 37, 37) !important;
+  border-style: outset;
+  box-shadow: -6px -5px 18px rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+.c1-button .c1-main {
+  border-radius: 45px;
+  color: rgba(255, 255, 255, 1);
+  padding: 5px 20px 5px 2px;
+  box-shadow: inset 0px 0px 5px rgba(17, 17, 17, 0);
+  transition: all 0.5s ease-in-out;
+  border: 1px solid transparent;
+}
+
+.c1-ico .c1-blur {
+  background: linear-gradient(318deg, rgb(200, 75, 75) 0%, rgb(145, 31, 31) 100%);
+  border-radius: 100%;
+  margin-left: 0;
+  padding: 5px 20px;
+  filter: blur(1px);
+  text-align: center;
+}
+
+.c1-ico {
+  position: relative;
+  margin-right: 10px;
+}
+
+.c1-ico .ico1-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Hovering */
+
+.c1-button .c1-main:hover {
+  box-shadow: inset 0px 0px 5px rgba(17, 17, 17, 0.6);
+  border: 1px solid rgba(26, 26, 26,0.5);
+  color: rgba(255, 255, 255, 0.5);
+}
