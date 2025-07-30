@@ -125,14 +125,10 @@
 // }
 
 
-
-
-
-import { URL } from 'url';
-import { AxePuppeteer } from '@axe-core/puppeteer';
 import chrome from 'chrome-aws-lambda';
 import puppeteer from 'puppeteer-core';
 import lighthouse from 'lighthouse';
+import { AxePuppeteer } from '@axe-core/puppeteer';
 import Analysis from '../models/Analysis.js';
 import { generateCsvFromAnalysis } from '../utils/reportGenerator.js';
 
@@ -143,89 +139,82 @@ if (!url) {
 return res.status(400).json({ success: false, message: 'URL is required' });
 }
 
-// Validate URL format
-new URL(url);
+const executablePath = await chrome.executablePath || '/usr/bin/chromium-browser';
 
-// Launch headless Chromium (compatible with serverless)
 const browser = await puppeteer.launch({
   args: chrome.args,
-  executablePath: await chrome.executablePath || '/usr/bin/chromium-browser',
+  executablePath,
   headless: chrome.headless,
+  defaultViewport: chrome.defaultViewport,
 });
 
 const page = await browser.newPage();
-await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
+await page.goto(url, { waitUntil: 'networkidle0' });
 
-// Run axe-core
-const axeResult = await new AxePuppeteer(page).analyze();
+// axe-core analysis
+const axeResults = await new AxePuppeteer(page).analyze();
 
-// Run Lighthouse via CDP (Chrome DevTools Protocol)
-const session = await page.target().createCDPSession();
-const { port } = new URL(browser.wsEndpoint());
+// lighthouse
+const wsEndpoint = browser.wsEndpoint();
+const chromePort = new URL(wsEndpoint).port;
 
 const options = {
   logLevel: 'info',
   output: 'json',
   onlyCategories: ['accessibility'],
-  port,
+  port: chromePort,
 };
 
-const runnerResult = await lighthouse(url, options);
-const lighthouseReport = JSON.parse(runnerResult.report);
+const lhResult = await lighthouse(url, options);
+const lhReport = JSON.parse(lhResult.report);
 
 await browser.close();
 
-// Save result to MongoDB
+const violations = axeResults.violations || [];
+
+const contrastCount = violations.filter(v => v.id.includes('color-contrast')).length;
+const fontSizeCount = violations.filter(v => v.id.includes('font-size')).length;
+const labelCount = violations.filter(v => v.id.includes('label') || v.id.includes('aria')).length;
+
+const recommendations = violations.map(v => v.help).filter(Boolean).slice(0, 5);
+
 const newAnalysis = new Analysis({
   url,
   timestamp: new Date(),
   summary: {
-    score: lighthouseReport.categories.accessibility.score * 100,
-    totalViolations: axeResult.violations.length,
+    score: lhReport.categories.accessibility.score * 100,
+    totalViolations: violations.length,
   },
   details: {
     lighthouse: {
-      score: lighthouseReport.categories.accessibility.score * 100,
-      audits: lighthouseReport.audits,
+      score: lhReport.categories.accessibility.score * 100,
+      audits: lhReport.audits,
     },
-    axe: axeResult,
+    axe: axeResults,
   },
 });
 
 const saved = await newAnalysis.save();
 
-// Extract summary details for frontend
-const violations = axeResult.violations || [];
-const contrastCount = violations.filter(v => v.id.includes('color-contrast')).length;
-const fontSizeCount = violations.filter(v => v.id.includes('font-size')).length;
-const labelCount = violations.filter(
-  v => v.id.includes('label') || v.id.includes('aria')
-).length;
-
-const recommendations = violations.map(v => v.help).filter(Boolean).slice(0, 5);
-
 res.status(200).json({
   success: true,
   analysisId: saved._id,
-  score: lighthouseReport.categories.accessibility.score * 100,
+  score: lhReport.categories.accessibility.score * 100,
   issues: {
     contrast: contrastCount,
     fontSize: fontSizeCount,
     labels: labelCount,
   },
-  passedChecks: axeResult.passes?.length || 0,
+  passedChecks: axeResults.passes?.length || 0,
   recommendations,
-  violations: axeResult.violations,
+  violations,
 });
 } catch (error) {
 console.error('Error analyzing site:', error.message);
-res.status(500).json({
-success: false,
-message: 'Analysis failed',
-error: error.message,
-});
+res.status(500).json({ success: false, message: 'Analysis failed', error: error.message });
 }
 }
+
 
 export async function downloadCsvReport(req, res) {
 try {
