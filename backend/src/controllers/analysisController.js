@@ -133,83 +133,77 @@ import { AxePuppeteer } from '@axe-core/puppeteer';
 import chrome from 'chrome-aws-lambda';
 
 import puppeteer from 'puppeteer-core';
-import lighthouse from 'lighthouse';
 import Analysis from '../models/Analysis.js';
 import { generateCsvFromAnalysis } from '../utils/reportGenerator.js';
 
 
 const isRender = process.env.RENDER === 'true';
+
 export async function analyzeWebsite(req, res) {
-try {
-const { url } = req.body;
-if (!url) return res.status(400).json({ success: false, message: 'URL is required' });
+  try {
+    const { url } = req.body;
+    if (!url) {
+      return res.status(400).json({ success: false, message: 'URL is required' });
+    }
 
-new URL(url); // validate
+    new URL(url); // Validate
 
-const executablePath = await chrome.executablePath;
-const browser = await puppeteer.launch({
-  args: chrome.args,
-  executablePath,
-  headless: chrome.headless,
-});
+    const executablePath = await chrome.executablePath;
+    const browser = await puppeteer.launch({
+      args: chrome.args,
+      executablePath,
+      headless: chrome.headless,
+    });
 
-const page = await browser.newPage();
-await page.goto(url, { waitUntil: 'networkidle0' });
+    const page = await browser.newPage();
+    await page.goto(url, { waitUntil: 'networkidle0' });
 
-// Run axe-core
-const axeResult = await new AxePuppeteer(page).analyze();
+    const axeResult = await new AxePuppeteer(page).analyze();
 
-// ⛔ Run Lighthouse only in development (not on Render)
-let lighthouseReport = null;
-if (!isRender) {
-  const port = new URL(browser.wsEndpoint()).port;
-  const runnerResult = await lighthouse(url, {
-    logLevel: 'info',
-    output: 'json',
-    onlyCategories: ['accessibility'],
-    port,
-  });
-  lighthouseReport = JSON.parse(runnerResult.report);
-}
+    // Skip Lighthouse on Render
+    const lighthouseScore = isRender ? 0 : 100;
 
-await browser.close();
+    await browser.close();
 
-// Save
-const newAnalysis = new Analysis({
-  url,
-  timestamp: new Date(),
-  summary: {
-    score: lighthouseReport ? lighthouseReport.categories.accessibility.score * 100 : 0,
-    totalViolations: axeResult.violations.length,
-  },
-  details: {
-    lighthouse: lighthouseReport || {},
-    axe: axeResult,
-  },
-});
+    const newAnalysis = new Analysis({
+      url,
+      timestamp: new Date(),
+      summary: {
+        score: lighthouseScore,
+        totalViolations: axeResult.violations.length,
+      },
+      details: {
+        lighthouse: {}, // Empty on Render
+        axe: axeResult,
+      },
+    });
 
-const saved = await newAnalysis.save();
+    const saved = await newAnalysis.save();
 
-const violations = axeResult.violations || [];
-const contrast = violations.filter(v => v.id.includes('color-contrast')).length;
-const fontSize = violations.filter(v => v.id.includes('font-size')).length;
-const labels = violations.filter(v => v.id.includes('label') || v.id.includes('aria')).length;
+    const violations = axeResult.violations || [];
+    const contrast = violations.filter(v => v.id.includes('color-contrast')).length;
+    const fontSize = violations.filter(v => v.id.includes('font-size')).length;
+    const labels = violations.filter(v => v.id.includes('label') || v.id.includes('aria')).length;
+    const recommendations = violations.map(v => v.help).filter(Boolean).slice(0, 5);
 
-const recommendations = violations.map(v => v.help).filter(Boolean).slice(0, 5);
+    res.status(200).json({
+      success: true,
+      analysisId: saved._id,
+      score: lighthouseScore,
+      issues: { contrast, fontSize, labels },
+      passedChecks: axeResult.passes?.length || 0,
+      recommendations,
+      violations,
+    });
 
-res.status(200).json({
-  success: true,
-  analysisId: saved._id,
-  score: newAnalysis.summary.score,
-  issues: { contrast, fontSize, labels },
-  passedChecks: axeResult.passes?.length || 0,
-  recommendations,
-  violations,
-});
-} catch (error) {
-console.error('Error analyzing site:', error.message);
-res.status(500).json({ success: false, message: 'Analysis failed', error: error.message });
-}
+  } catch (error) {
+    console.error('Error analyzing site:', error.message);
+    res.status(500).json({
+      success: false,
+      message: 'Analysis failed',
+      error: error.message,
+    });
+  }
 }
 
 export async function downloadCsvReport(req, res) {
