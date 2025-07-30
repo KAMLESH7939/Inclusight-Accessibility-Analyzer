@@ -139,7 +139,7 @@ if (!url) {
 return res.status(400).json({ success: false, message: 'URL is required' });
 }
 
-const executablePath = await chrome.executablePath || '/usr/bin/chromium-browser';
+const executablePath = await chrome.executablePath ;
 
 const browser = await puppeteer.launch({
   args: chrome.args,
