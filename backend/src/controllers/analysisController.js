@@ -128,48 +128,50 @@
 
 
 
-import chromium from 'chrome-aws-lambda';
 import { URL } from 'url';
+import { AxePuppeteer } from '@axe-core/puppeteer';
+import chrome from 'chrome-aws-lambda';
+import puppeteer from 'puppeteer-core';
 import lighthouse from 'lighthouse';
 import Analysis from '../models/Analysis.js';
 import { generateCsvFromAnalysis } from '../utils/reportGenerator.js';
-import { AxePuppeteer } from '@axe-core/puppeteer';
-import puppeteer from 'puppeteer-core';
 
 export async function analyzeWebsite(req, res) {
 try {
 const { url } = req.body;
-if (!url) return res.status(400).json({ success: false, message: 'URL is required' });
-new URL(url); // Validate URL
+if (!url) {
+return res.status(400).json({ success: false, message: 'URL is required' });
+}
 
-// Launch Chromium for Lighthouse
-const chrome = await chromium.puppeteer.launch({
-  args: chromium.args,
-  defaultViewport: chromium.defaultViewport,
-  executablePath: await chromium.executablePath,
-  headless: chromium.headless,
+// Validate URL format
+new URL(url);
+
+const executablePath = await chrome.executablePath;
+const browser = await puppeteer.launch({
+  args: chrome.args,
+  executablePath,
+  headless: chrome.headless,
 });
 
-const page = await chrome.newPage();
+// Axe-core analysis
+const page = await browser.newPage();
 await page.goto(url, { waitUntil: 'networkidle0' });
-
-// Run axe-core
 const axeResult = await new AxePuppeteer(page).analyze();
 
-// Close browser
-await chrome.close();
-
-// Run Lighthouse (optional, may not fully work with chrome-aws-lambda)
-const runnerResult = await lighthouse(url, {
+// Lighthouse analysis
+const port = new URL(browser.wsEndpoint()).port;
+const options = {
   logLevel: 'info',
   output: 'json',
   onlyCategories: ['accessibility'],
-  port: (new URL(chrome.wsEndpoint())).port,
-});
+  port,
+};
 
+const runnerResult = await lighthouse(url, options);
 const lighthouseReport = JSON.parse(runnerResult.report);
+await browser.close();
 
-// Save to DB
+// Save result to MongoDB
 const newAnalysis = new Analysis({
   url,
   timestamp: new Date(),
@@ -188,14 +190,53 @@ const newAnalysis = new Analysis({
 
 const saved = await newAnalysis.save();
 
+// Basic issue extraction
+const violations = axeResult.violations || [];
+const contrastCount = violations.filter(v => v.id.includes('color-contrast')).length;
+const fontSizeCount = violations.filter(v => v.id.includes('font-size')).length;
+const labelCount = violations.filter(
+  v => v.id.includes('label') || v.id.includes('aria')
+).length;
+
+const recommendations = violations.map(v => v.help).filter(Boolean).slice(0, 5);
+
 res.status(200).json({
   success: true,
   analysisId: saved._id,
-  lighthouse: newAnalysis.details.lighthouse,
-  axe: newAnalysis.details.axe,
+  score: lighthouseReport.categories.accessibility.score * 100,
+  issues: {
+    contrast: contrastCount,
+    fontSize: fontSizeCount,
+    labels: labelCount,
+  },
+  passedChecks: axeResult.passes?.length || 0,
+  recommendations,
+  violations: axeResult.violations,
 });
 } catch (error) {
 console.error('Error analyzing site:', error.message);
-res.status(500).json({ success: false, message: 'Analysis failed', error: error.message });
+res.status(500).json({
+success: false,
+message: 'Analysis failed',
+error: error.message,
+});
+}
+}
+
+export async function downloadCsvReport(req, res) {
+try {
+const { id } = req.params;
+const analysisDoc = await Analysis.findById(id);
+if (!analysisDoc) {
+return res.status(404).json({ error: 'Analysis not found' });
+}
+
+const csv = generateCsvFromAnalysis(analysisDoc);
+res.setHeader('Content-Type', 'text/csv');
+res.setHeader('Content-Disposition', `attachment; filename="report-${id}.csv"`);
+res.send(csv);
+} catch (error) {
+console.error('CSV generation error:', error.message);
+res.status(500).json({ error: 'CSV report generation failed' });
 }
 }
