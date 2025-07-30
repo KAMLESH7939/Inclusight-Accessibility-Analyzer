@@ -37,7 +37,7 @@ const HomePage = () => {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("http://localhost:5001/api/analyze", {
+      const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url }),
@@ -68,7 +68,7 @@ const HomePage = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5001/api/analyze/download/${id}`
+        `/api/analyze/download/${id}`
       );
       if (!response.ok) throw new Error("Failed to download report");
       const blob = await response.blob();
