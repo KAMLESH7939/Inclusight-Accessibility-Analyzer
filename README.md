@@ -26,6 +26,8 @@ Inclusight provides:
 ![Demo App](/frontend/public/inc2.jpg)
 ![Demo App](/frontend/public/inc3.jpg)
 ![Demo App](/frontend/public/inc4.jpg)
+![Demo App](/frontend/public/inc5.jpg)
+![Demo App](/frontend/public/inc6.jpg)
 
 ## 📁 Project Structure
 
@@ -105,7 +107,7 @@ The **backend** follows the **Model-View-Controller** pattern:
 - **Responsive UI**: Built with Tailwind CSS and React.
 - **Dark Mode**: Toggle for accessibility-friendly viewing.
 - **YouTube Guides**: Links to tutorials for fixing issues.
-![Demo App](/frontend/public/inc6.jpg)
+
 ![Demo App](/frontend/public/inc7.jpg)
 ![Demo App](/frontend/public/inc8.jpg)
 ---
