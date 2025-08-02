@@ -232,6 +232,6 @@ Contributions are welcome! Please open an issue or submit a PR.
 ```bash
 Kamlesh – Full Stack Developer | Competitive Programmer
 GitHub: KAMLESH7939
-LinkedIn: (Your LinkedIn profile here)
+LinkedIn: in/kamlesh-b08306259
 
 ```
