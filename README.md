@@ -110,6 +110,8 @@ The **backend** follows the **Model-View-Controller** pattern:
 
 ![Demo App](/frontend/public/inc7.jpg)
 ![Demo App](/frontend/public/inc9.jpg)
+![Demo App](/frontend/public/inc10.jpg)
+![Demo App](/frontend/public/inc11.jpg)
 ---
 
 ## ⚙️ Environment Variables
