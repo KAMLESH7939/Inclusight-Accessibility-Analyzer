@@ -195,6 +195,7 @@ Over 1 billion people worldwide live with some form of disability. Many websites
 ## 📸 Screenshots
 (Add screenshots or gifs of your frontend, analysis results, and CSV download here)
 
+
 ## 🔗 Live Demo (Frontend)
 
 - Frontend: https://frontend-inclusight-u5nq.vercel.app
@@ -210,9 +211,6 @@ Over 1 billion people worldwide live with some form of disability. Many websites
 - **Auth** : JWT
 
 - **Other** : Cloudinary (file storage), CSV generation
-
-## 📜 License
-This project is licensed under the MIT License.
 
 ## 🤝 Contributing
 Contributions are welcome! Please open an issue or submit a PR.
