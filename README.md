@@ -109,7 +109,7 @@ The **backend** follows the **Model-View-Controller** pattern:
 - **YouTube Guides**: Links to tutorials for fixing issues.
 
 ![Demo App](/frontend/public/inc7.jpg)
-![Demo App](/frontend/public/inc8.jpg)
+![Demo App](/frontend/public/inc9.jpg)
 ---
 
 ## ⚙️ Environment Variables
