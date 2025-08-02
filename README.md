@@ -22,6 +22,12 @@ Inclusight provides:
 - A **Node.js/Express backend** that runs the analysis
 - **MongoDB** for storing analysis history
 - **CSV report generation** for sharing and record-keeping
+- 
+![Demo App](/frontend/public/inc2.jpg)
+![Demo App](/frontend/public/inc3.jpg)
+![Demo App](/frontend/public/inc4.jpg)
+![Demo App](/frontend/public/inc5.jpg)
+
 
 ## 📁 Project Structure
 
