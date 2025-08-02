@@ -27,12 +27,10 @@ Inclusight provides:
 - **MongoDB** for storing analysis history
 - **CSV report generation** for sharing and record-keeping
 
----
-
 ## 📁 Project Structure
 
 ### 🖥 Frontend (React + Tailwind CSS)
-
+```
 client/
 ├── public/ # Static public assets
 │ └── index.html # Main HTML file
@@ -58,15 +56,11 @@ client/
 ├── tailwind.config.js # Tailwind configuration
 ├── postcss.config.js # PostCSS configuration
 └── package.json # Frontend dependencies
+```
 
-yaml
-Copy
-Edit
-
----
 
 ### ⚙️ Backend (Node.js + Express + MongoDB)
-
+```
 server/
 ├── controllers/ # Request handling logic
 │ ├── analysisController.js # Runs accessibility audits, CSV generation
@@ -79,11 +73,7 @@ server/
 ├── config.js # MongoDB and Firebase config
 ├── server.js # Express app entry point
 └── package.json # Backend dependencies
-
-markdown
-Copy
-Edit
-
+```
 ---
 
 ## 🏛 MVC Architecture
@@ -130,50 +120,44 @@ CLOUDINARY_API_KEY=your_cloudinary_key
 CLOUDINARY_API_SECRET=your_cloudinary_secret
 FRONTEND_ORIGIN=http://localhost:5173
 NODE_ENV=development
+```
 In /client, create a .env:
-
-env
-Copy
-Edit
+```
 VITE_BACKEND_URL=http://localhost:5001
-🚀 Getting Started
+```
+
+##🚀 Getting Started
 1️⃣ Clone the repo
-bash
-Copy
-Edit
+```bash
 git clone https://github.com/KAMLESH7939/Inclusight-Accessibility-Analyzer.git
 cd Inclusight-Accessibility-Analyzer
+``` 
 2️⃣ Install dependencies
+```bash
 Backend
-bash
-Copy
-Edit
 cd server
 npm install
+
 Frontend
-bash
-Copy
-Edit
 cd ../client
 npm install
+```
+
 3️⃣ Run the app locally
-Backend
-bash
-Copy
-Edit
+```bash
+Backend:
 cd server
 npm run dev
-Frontend
-bash
-Copy
-Edit
+
+Frontend:
 cd ../client
 npm run dev
 The frontend will run on http://localhost:5173
 The backend will run on http://localhost:5001
+```
+##📦 CSV Report Generation
 
-📦 CSV Report Generation
-When you analyze a URL:
+### When you analyze a URL:
 
 Lighthouse & axe-core scan for accessibility issues.
 
@@ -183,53 +167,56 @@ CSV is generated from the JSON.
 
 User can download the CSV report directly from the frontend.
 
-🌍 Real-world Problem Solved
+## 🌍 Real-world Problem Solved
+
 Over 1 billion people worldwide live with some form of disability. Many websites still fail basic accessibility checks, excluding these users from accessing information, services, or products.
 
-Inclusight helps developers:
+### Inclusight helps developers:
 
-Identify barriers for visually impaired or color-blind users.
+1. Identify barriers for visually impaired or color-blind users.
 
-Comply with accessibility standards (WCAG 2.1).
+2. Comply with accessibility standards (WCAG 2.1).
 
-Create an inclusive online experience for everyone.
+3. Create an inclusive online experience for everyone.
 
-🔗 Test with Known Poor Accessibility Websites
-Here are some example URLs you can use to see Inclusight in action:
+## 🔗 Test with Known Poor Accessibility Websites
 
-Contrast Rebellion – Low contrast text
+### Here are some example URLs you can use to see Inclusight in action:
 
-Ling’s Cars – Messy fonts & colors
+1. Contrast Rebellion – Low contrast text
 
-World’s Worst Website Ever – Poor design & readability
+2. Ling’s Cars – Messy fonts & colors
 
-Arngren.net – Cluttered design
+3. World’s Worst Website Ever – Poor design & readability
 
-📸 Screenshots
+4. Arngren.net – Cluttered design
+
+## 📸 Screenshots
 (Add screenshots or gifs of your frontend, analysis results, and CSV download here)
 
-🔗 Live Demo (Frontend)
-Frontend: https://frontend-inclusight-u5nq.vercel.app
-Backend: (Available locally or on request due to hosting costs)
+## 🔗 Live Demo (Frontend)
+
+- Frontend: https://frontend-inclusight-u5nq.vercel.app
+- Backend: (Available locally or on request due to hosting costs)
 
 🛠 Tech Stack
-Frontend: React.js, Tailwind CSS, Axios
+- **Frontend **: React.js, Tailwind CSS, Axios
 
-Backend: Node.js, Express.js, Puppeteer, Lighthouse, axe-core
+- **Backend** : Node.js, Express.js, Puppeteer, Lighthouse, axe-core
 
-Database: MongoDB (Mongoose)
+- **Database** : MongoDB (Mongoose)
 
-Auth: JWT
+- **Auth** : JWT
 
-Other: Cloudinary (file storage), CSV generation
+- **Other** : Cloudinary (file storage), CSV generation
 
-📜 License
+## 📜 License
 This project is licensed under the MIT License.
 
-🤝 Contributing
+## 🤝 Contributing
 Contributions are welcome! Please open an issue or submit a PR.
 
-👤 Author
+## 👤 Author
 Kamlesh – Full Stack Developer | Competitive Programmer
 GitHub: KAMLESH7939
 LinkedIn: (Your LinkedIn profile here)
