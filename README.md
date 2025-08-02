@@ -1,6 +1,6 @@
 # 🌐 Inclusight – Accessibility Analyzer
 
-![Demo App](/frontend/public/inc1.png)
+![Demo App](/frontend/public/inc1.jpg)
 
 **Inclusight** is a full-stack web application that helps **website owners, developers, and accessibility advocates** evaluate the accessibility of any public website.
 
