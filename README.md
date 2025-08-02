@@ -75,10 +75,6 @@ Inclusight/
 │
 └── README.md
 
-markdown
-Copy
-Edit
-
 ---
 
 ## 🏛 MVC Architecture
@@ -166,6 +162,7 @@ cd ../client
 npm run dev
 The frontend will run on http://localhost:5173
 The backend will run on http://localhost:5001
+
 
 📦 CSV Report Generation
 When you analyze a URL:
