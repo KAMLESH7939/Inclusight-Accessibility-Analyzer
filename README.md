@@ -156,17 +156,17 @@ npm run dev
 The frontend will run on http://localhost:5173
 The backend will run on http://localhost:5001
 ```
-##📦 CSV Report Generation
+## 📦 CSV Report Generation
 
 ### When you analyze a URL:
 
-Lighthouse & axe-core scan for accessibility issues.
+- Lighthouse & axe-core scan for accessibility issues.
 
-The results are compiled into JSON.
+- The results are compiled into JSON.
 
-CSV is generated from the JSON.
+- CSV is generated from the JSON.
 
-User can download the CSV report directly from the frontend.
+- User can download the CSV report directly from the frontend.
 
 ## 🌍 Real-world Problem Solved
 
