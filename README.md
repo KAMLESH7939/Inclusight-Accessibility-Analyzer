@@ -105,7 +105,9 @@ The **backend** follows the **Model-View-Controller** pattern:
 - **Responsive UI**: Built with Tailwind CSS and React.
 - **Dark Mode**: Toggle for accessibility-friendly viewing.
 - **YouTube Guides**: Links to tutorials for fixing issues.
-
+![Demo App](/frontend/public/inc6.jpg)
+![Demo App](/frontend/public/inc7.jpg)
+![Demo App](/frontend/public/inc8.jpg)
 ---
 
 ## ⚙️ Environment Variables
