@@ -126,7 +126,8 @@ In /client, create a .env:
 VITE_BACKEND_URL=http://localhost:5001
 ```
 
-##🚀 Getting Started
+🚀 Getting Started
+
 1️⃣ Clone the repo
 ```bash
 git clone https://github.com/KAMLESH7939/Inclusight-Accessibility-Analyzer.git
