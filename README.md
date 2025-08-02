@@ -199,7 +199,11 @@ Over 1 billion people worldwide live with some form of disability. Many websites
 4. Arngren.net – Cluttered design
 
 ## 📸 Screenshots
-(Add screenshots or gifs of your frontend, analysis results, and CSV download here)
+
+![Demo App](/frontend/public/inc12.png)
+![Demo App](/frontend/public/inc13.png)
+![Demo App](/frontend/public/inc14.png)
+![Demo App](/frontend/public/inc15.png)
 
 
 ## 🔗 Live Demo (Frontend)
