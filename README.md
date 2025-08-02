@@ -1,10 +1,6 @@
-//# ✨ Full Stack Realtime Chat App ✨
-
-//![Demo App](/frontend/public/screenshot-for-readme.png)
-
-//[Video Tutorial on Youtube](https://youtu.be/ntKkVrQqBYY)
-
 # 🌐 Inclusight – Accessibility Analyzer
+
+![Demo App](/frontend/public/inc1.png)
 
 **Inclusight** is a full-stack web application that helps **website owners, developers, and accessibility advocates** evaluate the accessibility of any public website.
 
