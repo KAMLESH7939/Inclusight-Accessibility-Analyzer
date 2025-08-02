@@ -26,8 +26,6 @@ Inclusight provides:
 ![Demo App](/frontend/public/inc2.jpg)
 ![Demo App](/frontend/public/inc3.jpg)
 ![Demo App](/frontend/public/inc4.jpg)
-![Demo App](/frontend/public/inc5.jpg)
-
 
 ## 📁 Project Structure
 
