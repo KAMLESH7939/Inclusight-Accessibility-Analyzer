@@ -4,6 +4,8 @@
 
 //[Video Tutorial on Youtube](https://youtu.be/ntKkVrQqBYY)
 
+# 🌐 Inclusight – Accessibility Analyzer
+
 **Inclusight** is a full-stack web application that helps **website owners, developers, and accessibility advocates** evaluate the accessibility of any public website.
 
 It uses **Lighthouse**, **axe-core**, and **Puppeteer** to check for accessibility issues such as:
@@ -227,9 +229,7 @@ This project is licensed under the MIT License.
 🤝 Contributing
 Contributions are welcome! Please open an issue or submit a PR.
 
-
 👤 Author
 Kamlesh – Full Stack Developer | Competitive Programmer
 GitHub: KAMLESH7939
 LinkedIn: (Your LinkedIn profile here)
-
