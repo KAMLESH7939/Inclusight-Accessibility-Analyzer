@@ -1,6 +1,13 @@
 # 🌐 Inclusight – Accessibility Analyzer
 
 ![Demo App](/frontend/public/inc1.jpg)
+<div>
+  <video width="320" height="240" autoplay muted>
+  <source src="/frontend/public/yo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+</div>
+
 
 **Inclusight** is a full-stack web application that helps **website owners, developers, and accessibility advocates** evaluate the accessibility of any public website.
 
