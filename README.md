@@ -1,6 +1,7 @@
 # 🌐 Inclusight – Accessibility Analyzer
 
 ![Demo App](/frontend/public/inc1.jpg)
+
 <div>
   <video width="320" height="240" autoplay muted>
   <source src="/frontend/public/yo.mp4" type="video/mp4">
